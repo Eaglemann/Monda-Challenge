@@ -1,0 +1,7 @@
+id,name,country,event_type,event_date,event_metadata
+1,John,DE,signup,2025-01-01,"{""user_id"": 123, ""session_duration"": 45}"
+2,Maria,FR,purchase,2025-01-02,"{""user_id"": 456, ""amount"": 120.5}"
+3,Peter,DE,login,2025-01-03,"{""user_id"": 123, ""ip"": ""192.168.1.10""}"
+4,Sophie,FR,logout,2025-01-03,"{""user_id"": 456, ""session_duration"": 15}"
+5,Mark,NL,signup,2025-01-04,"{""user_id"": 777, ""session_duration"": 60}"
+6,Laura,DE,purchase,2025-01-05,"{""user_id"": 888, ""amount"": 49.99}"

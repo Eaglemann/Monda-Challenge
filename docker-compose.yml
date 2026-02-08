@@ -1,0 +1,56 @@
+services:
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set local http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD} &&
+      /usr/bin/mc mb --ignore-existing local/${MINIO_BUCKET} &&
+      /usr/bin/mc ls local
+      "
+
+  prefect:
+    image: prefecthq/prefect:3-python3.11
+    command: prefect server start --host 0.0.0.0
+    ports:
+      - "4200:4200"
+      - "4201:4201"
+    environment:
+      PREFECT_API_URL: ${PREFECT_API_URL}
+      PREFECT_API_DATABASE_CONNECTION_URL: ${PREFECT_API_DATABASE_CONNECTION_URL}
+    depends_on:
+      - prefect-db
+
+  prefect-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${PREFECT_DB_USER}
+      POSTGRES_PASSWORD: ${PREFECT_DB_PASSWORD}
+      POSTGRES_DB: ${PREFECT_DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - prefect_db_data:/var/lib/postgresql/data
+
+volumes:
+  minio_data:
+  prefect_db_data:

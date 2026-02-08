@@ -1,0 +1,7 @@
+id,name,country,event_type,event_date,event_metadata
+7,Ana,ES,signup,2025-01-03,"{""user_id"": 789, ""session_duration"": 30}"
+8,Luca,IT,purchase,2025-01-04,"{""user_id"": 321, ""amount"": 75.0}"
+9,Carlos,ES,login,2025-01-05,"{""user_id"": 789, ""ip"": ""10.0.0.5""}"
+10,Giulia,IT,logout,2025-01-05,"{""user_id"": 321, ""session_duration"": 20}"
+11,Emma,UK,signup,2025-01-06,"{""user_id"": 654, ""session_duration"": 55}"
+12,Oliver,UK,purchase,2025-01-07,"{""user_id"": 654, ""amount"": 210.0}"

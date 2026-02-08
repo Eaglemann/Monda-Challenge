@@ -1,0 +1,12 @@
+source_table: events
+filters:
+  - name: germany_events
+    where: "country = 'DE'"
+    flatten:
+      - path: "event_metadata.user_id"
+        type: "NUMBER"
+      - path: "event_metadata.session_duration"
+        type: "NUMBER"
+  - name: recent_signups
+    where: "event_type = 'signup'"
+    flatten: []
